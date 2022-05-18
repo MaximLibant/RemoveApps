@@ -7,10 +7,40 @@ foreach ($app in $appList) {
 }
 
 #remove annoying TCO Certified shortcut
-$tcoPath = 'C:\Users\public\Desktop\TCO Certified.ink'
+$tcoPath = 'C:\Users\Public\Desktop\TCO Certified.lnk'
 
-if (Test-Path -path $tcoPath -PathType Leaf){
+if (Test-Path -path $tcoPath){
 
     remove-item -path $tcoPath
 
+}
+
+$appList = @('HP Documentation','HP Wolf Security','HP Security Update Service','HP Connection Optimizer','HP notifications','HP Wolf Security')
+
+foreach($app in $applist) {
+    if (winget search $app) {
+
+        try {
+            winget uninstall --accept-source-agreements --silent --name $app
+        } catch {}
+    }
+}
+
+#remove shortcuts
+$shortcut = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\HP Sure Click Pro Secure Browser.lnk'
+if (Test-Path $shortcut) {
+
+    Remove-Item $shortcut
+}
+
+$shortcut = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\HP Wolf Security.lnk'
+if (Test-Path $shortcut) {
+
+    Remove-Item $shortcut
+}
+
+$shortcut = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\HP Documentation.lnk'
+if (Test-Path $shortcut) {
+
+    Remove-Item $shortcut
 }
