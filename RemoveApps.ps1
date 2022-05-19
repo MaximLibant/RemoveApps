@@ -37,6 +37,39 @@ foreach ($app in $appList) {
 }
 #endRegion
 
+#region remove Pesky HP Software
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security"}
+if ($app) {
+    $app.uninstall()
+}
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Notifications"}
+if ($app) {
+    $app.uninstall()
+}
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Serucity Update Service"}
+if ($app) {
+    $app.uninstall()
+}
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security Application Support for Windows"}
+if ($app) {
+    $app.uninstall()
+}
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -match "HP Wolf Security Application Support for Chrome"}
+if ($app) {
+    $app.uninstall()
+}
+
+$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings  "}
+if ($app) {
+    $app.uninstall()
+}
+#endRegion
+
 #region delShortcuts
 $tcoPath = 'C:\Users\Public\Desktop\TCO Certified.lnk'
 
