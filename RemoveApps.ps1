@@ -1,31 +1,30 @@
-$logFile = C:\logs\removeAppsLog.txt
+$logFilePath = C:\logs\
+$appName = "removeApps"
 
-Start-Transcript $logFile -Force
+if (!$logFilePath) {
 
-#Remove all annoying HP apps
+    mkdir $logFilePath
+}
+
+#Start Recording logs
+Start-Transcript C:\logs\$appName -Force
+
+#Region RemoveHP-Software
 $appList = Get-AppxPackage -allusers | where-object {$_.name -match "HP"}
 
 foreach ($app in $appList) {
     Remove-AppxPackage -package $app -erroraction silentlycontinue
     Write-Output('removing ' + $app + '...')
 }
+#endRegion
 
-#remove annoying TCO Certified shortcut
+#region delShortcuts
 $tcoPath = 'C:\Users\Public\Desktop\TCO Certified.lnk'
 
 if (Test-Path -path $tcoPath){
 
     remove-item -path $tcoPath
 
-}
-
-$appList = @('HP Documentation','HP Wolf Security','HP Security Update Service','HP Connection Optimizer','HP notifications','HP Wolf Security')
-
-foreach($app in $applist) {
-    if (winget search $app) {
-
-        winget uninstall --accept-source-agreements --silent --name $app -erroraction silentlycontinue   
-    }
 }
 
 #remove shortcuts
@@ -46,5 +45,6 @@ if (Test-Path $shortcut) {
 
     Remove-Item $shortcut
 }
+#endRegion
 
 Stop-Transcript
