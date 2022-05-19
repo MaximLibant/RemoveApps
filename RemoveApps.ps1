@@ -42,31 +42,37 @@ foreach ($app in $appList) {
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security"}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Notifications"}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Serucity Update Service"}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security Application Support for Windows"}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -match "HP Wolf Security Application Support for Chrome"}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 
 $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings  "}
 if ($app) {
     $app.uninstall()
+    Write-Output("Removing $app...")
 }
 #endRegion
 
