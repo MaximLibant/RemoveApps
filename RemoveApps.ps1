@@ -1,3 +1,7 @@
+$logFile = C:\logs\removeAppsLog.txt
+
+Start-Transcript $logFile -Force
+
 #Remove all annoying HP apps
 $appList = Get-AppxPackage -allusers | where-object {$_.name -match "HP"}
 
@@ -20,9 +24,7 @@ $appList = @('HP Documentation','HP Wolf Security','HP Security Update Service',
 foreach($app in $applist) {
     if (winget search $app) {
 
-        try {
-            winget uninstall --accept-source-agreements --silent --name $app
-        } catch {}
+        winget uninstall --accept-source-agreements --silent --name $app -erroraction silentlycontinue   
     }
 }
 
@@ -44,3 +46,5 @@ if (Test-Path $shortcut) {
 
     Remove-Item $shortcut
 }
+
+Stop-Transcript
