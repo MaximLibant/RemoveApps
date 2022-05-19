@@ -110,3 +110,4 @@ if (Test-Path $shortcut) {
 
 Write-Output('Script completed succsefully')
 Stop-Transcript
+return $true
