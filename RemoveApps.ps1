@@ -1,9 +1,12 @@
 $logFilePath = C:\logs\
 $appName = "removeApps.txt"
 
-if (!$logFilePath) {
-
+if (!test-path -path $logFilePath) {
     mkdir $logFilePath
+}
+
+if (Test-Path -path "$logFilePath\$appName") {
+    remove-item "$logFilePath\$appName"
 }
 
 #Start Recording logs
