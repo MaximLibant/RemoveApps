@@ -1,5 +1,5 @@
 $logFilePath = C:\logs\
-$appName = "removeApps"
+$appName = "removeApps.txt"
 
 if (!$logFilePath) {
 
@@ -38,42 +38,60 @@ foreach ($app in $appList) {
 #endRegion
 
 #region remove Pesky HP Software
+try {
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security"}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
 
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security"}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Notifications"}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
+
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Serucity Update Service"}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
+
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security Application Support for Windows"}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
+
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -match "HP Wolf Security Application Support for Chrome"}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
+
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings  "}
+    if ($app) {
+        $app.uninstall()
+        Write-Output("Removing $app...")
+    }
+}
+catch {
+    <#Do this if a terminating exception happens#>
+    $fail = $_.exception.message   
+}
+finally {
+    <#Do this after the try block regardless of whether an exception occurred or not#>
+    if ($fail) {
+
+        Write-Host $fail
+        Stop-Transcript
+        throw $fail
+
+    } else {
+        Write-Host "Apps removed, moving on."
+    }
 }
 
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Notifications"}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
-}
-
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Serucity Update Service"}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
-}
-
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Wolf Security Application Support for Windows"}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
-}
-
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -match "HP Wolf Security Application Support for Chrome"}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
-}
-
-$app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings  "}
-if ($app) {
-    $app.uninstall()
-    Write-Output("Removing $app...")
-}
 #endRegion
 
 #region delShortcuts
