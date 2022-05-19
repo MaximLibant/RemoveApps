@@ -51,7 +51,7 @@ try {
         Write-Output("Removing $app...")
     }
 
-    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Serucity Update Service"}
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP Security Update Service"}
     if ($app) {
         $app.uninstall()
         Write-Output("Removing $app...")
@@ -69,7 +69,7 @@ try {
         Write-Output("Removing $app...")
     }
 
-    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings  "}
+    $app = Get-WmiObject -class win32_product | Where-Object {$_.Name -eq "HP System Default Settings"}
     if ($app) {
         $app.uninstall()
         Write-Output("Removing $app...")
